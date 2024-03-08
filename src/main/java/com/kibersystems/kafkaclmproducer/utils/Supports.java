@@ -5,7 +5,6 @@ import org.springframework.stereotype.Component;
 @Component
 public class Supports {
 
-
     /**
      * Обертка над значением null в строке
      *
