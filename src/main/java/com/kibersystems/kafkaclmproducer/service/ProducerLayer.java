@@ -54,5 +54,18 @@ public class ProducerLayer {
         return executors.setThreadPool(pool);
     }
 
+    /**
+     * Обертка над флагом случайного выбора
+     */
+    public boolean getRandomizeFlag(){
+        return configure.isRandomizeLoad();
+    }
+
+    public boolean setRandomaizeFlag(boolean flag){
+        configure.setRandomizeLoad(flag);
+        return getRandomizeFlag();
+    }
+
+
 
 }

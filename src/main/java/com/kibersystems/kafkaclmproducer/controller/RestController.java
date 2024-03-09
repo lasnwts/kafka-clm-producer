@@ -75,4 +75,24 @@ public class RestController {
         }
     }
 
+
+    /**
+     * Получить флаг (случайный или нет порядок отправки)
+     */
+    @GetMapping(value = "/rand")
+    @Operation(summary = "Просмотр порядка выбора сообщений. Случайный или по порядку")
+    ResponseEntity<Boolean> getRandomizeFlag() {
+            return new ResponseEntity<>(producerLayer.getRandomizeFlag(), HttpStatus.OK);
+    }
+
+    /**
+     * Установить флаг (случайный или нет порядок отправки)
+     */
+    @PutMapping(value = "/rand/{rand}")
+    @Operation(summary = "Просмотр порядка выбора сообщений. Случайный или по порядку")
+    ResponseEntity<Boolean> setRandomizeFlag(@Parameter(description = "true - случайный выбор, false - последовательный", example = "false")
+                                             @PathVariable boolean rand) {
+        return new ResponseEntity<>(producerLayer.setRandomaizeFlag(rand), HttpStatus.OK);
+    }
+
 }

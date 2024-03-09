@@ -22,6 +22,10 @@ public class Configure {
      */
     private int threads;
 
+    /**
+     * Случайный выбор файла сообщения
+     */
+    private boolean randomizeLoad;
 
     /**
      * Application properties
@@ -65,6 +69,14 @@ public class Configure {
     }
     public Integer getServicePoolSizeMax() {
         return servicePoolSizeMax;
+    }
+
+    public synchronized boolean isRandomizeLoad() {
+        return randomizeLoad;
+    }
+
+    public synchronized void setRandomizeLoad(boolean randomizeLoad) {
+        this.randomizeLoad = randomizeLoad;
     }
 }
 
