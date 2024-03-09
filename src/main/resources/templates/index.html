@@ -1,0 +1,32 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <link rel="stylesheet" type="text/css" href="style.css">
+
+</head>
+
+<body>
+
+<form id="add-form" th:action="@{/}" th:object="${animal}" th:method="post">
+    <div class="row">
+
+<!--        <input type="text" th:field="*{name}"></input>-->
+    </div>
+    <div class="row">
+        <button id="add" type="submit">Добавить в корзину</button>
+    </div>
+</form>
+
+<table>
+
+    <tbody th:each="animal, iStat : ${animals}">
+    <tr th:style="${iStat.odd}? 'font-weight: bold;'">
+        <td th:text="${iStat.index}+1"></td>
+        <td th:text="${animal.name}"></td>
+    </tr>
+    </tbody>
+</table>
+
+</body>
+</html>

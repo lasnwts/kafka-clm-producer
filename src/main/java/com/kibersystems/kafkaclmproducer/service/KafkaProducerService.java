@@ -27,16 +27,17 @@ public class KafkaProducerService {
      */
     public boolean sendMessage(String topic, String key, String msg) {
         try {
+            logger.info("Send prepare.Topic={}; Send message={}", topic, msg);
             kafkaTemplate.send(topic, key, msg);
-            logger.info("UsbLog:Success send.Topic={}; Send message={}", topic, msg);
             return true;
         } catch (Exception exception) {
             logger.error("UsbLog:!!!!!!!!!!!!!!!!!<ERROR send message>!!!!!!!!!!!!!!!!!!!!!!");
-            logger.error("UsbLog:Error:send failure:topic:{}", topic);
+            logger.error("UsbLog:Error:send failure:topic:{}; key:{}", topic, key);
             logger.error("UsbLog:Error:send failure:message:{}", msg);
-            logger.error("UsbLog:Execption:", exception);
+            logger.error("UsbLog:Execution:", exception);
             logger.error("UsbLog:!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
             return false;
         }
     }
+
 }

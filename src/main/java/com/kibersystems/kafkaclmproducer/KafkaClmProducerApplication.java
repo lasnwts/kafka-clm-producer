@@ -33,8 +33,8 @@ public class KafkaClmProducerApplication implements CommandLineRunner {
 				.description("Обмен между ЕФС(Siebel) и ИСЖ." +
 						"a library for OpenAPI 3 with spring boot.")
 				.termsOfService("../")
-				.license(new License().name("Uralsib Bank license")
-						.url("http://uralsib.ru")));
+				.license(new License().name("Free SoftWare Foundation")
+						.url("https://en.wikipedia.org/wiki/Free_Software_Foundation")));
 	}
 
 	@Override
