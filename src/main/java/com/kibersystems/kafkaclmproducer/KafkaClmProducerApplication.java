@@ -6,10 +6,13 @@ import io.swagger.v3.oas.models.info.License;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.Bean;
+
 
 @SpringBootApplication
 public class KafkaClmProducerApplication implements CommandLineRunner {
@@ -19,12 +22,11 @@ public class KafkaClmProducerApplication implements CommandLineRunner {
 
 	@Value("${info.app.name:none}")
 	private String appName;
-
+	private static ConfigurableApplicationContext context;
 	Logger logger = LoggerFactory.getLogger(KafkaClmProducerApplication.class);
 	public static void main(String[] args) {
 		SpringApplication.run(KafkaClmProducerApplication.class, args);
 	}
-
 	@Bean
 	public OpenAPI customOpenAPI(@Value("${info.application.version:none}") String appVersion) {
 		return new OpenAPI().info(new Info()
@@ -37,10 +39,23 @@ public class KafkaClmProducerApplication implements CommandLineRunner {
 						.url("https://en.wikipedia.org/wiki/Free_Software_Foundation")));
 	}
 
+	/**
+	 * Функция перезапуска приложения
+	 */
+	public static void restart() {
+		ApplicationArguments args = context.getBean(ApplicationArguments.class);
+		Thread thread = new Thread(() -> {
+			context.close();
+			context = SpringApplication.run(KafkaClmProducerApplication.class, args.getSourceArgs());
+		});
+		thread.setDaemon(false);
+		thread.start();
+	}
+
 	@Override
 	public void run(String... args) {
 		logger.info("+-----------------------------------------------------------------------------------------------------------+");
-		logger.info(" Created by 08.03.2024   : Author: Lyapustin A.S.");
+		logger.info(" Created by 08.03.2024   : Author: Lyapustin A.S./ Ляпустин Александр");
 		logger.info("-------------------------------------------------------------------------------------------------------------");
 		logger.info("| Application Name       :{}", appName);
 		logger.info("| Current version        :{}", appVersion);

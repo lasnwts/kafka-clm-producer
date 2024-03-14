@@ -28,6 +28,15 @@ public class Configure {
     private boolean randomizeLoad;
 
     /**
+     * Имя топика, ключа, сообщение, количество повторов
+     */
+    private int repeatCont; //Количество сообщений
+    private String messageBody; //Тело сообщения
+    private String key; //Ключ сообщения
+    private String topicName; //Имя топика
+
+
+    /**
      * Application properties
      */
     @Value("${info.application.name}")
@@ -77,6 +86,38 @@ public class Configure {
 
     public synchronized void setRandomizeLoad(boolean randomizeLoad) {
         this.randomizeLoad = randomizeLoad;
+    }
+
+    public int getRepeatCont() {
+        return repeatCont;
+    }
+
+    public void setRepeatCont(int repeatCont) {
+        this.repeatCont = repeatCont;
+    }
+
+    public String getMessageBody() {
+        return messageBody;
+    }
+
+    public void setMessageBody(String messageBody) {
+        this.messageBody = messageBody;
+    }
+
+    public String getKey() {
+        return key;
+    }
+
+    public void setKey(String key) {
+        this.key = key;
+    }
+
+    public String getTopicName() {
+        return topicName;
+    }
+
+    public void setTopicName(String topicName) {
+        this.topicName = topicName;
     }
 }
 

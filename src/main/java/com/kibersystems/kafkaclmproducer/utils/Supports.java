@@ -19,4 +19,18 @@ public class Supports {
         }
     }
 
+    /**
+     * Обертка над количеством сообщений
+     *
+     * @param i - установленное число повторов
+     * @return - если число 0 -> вернем 1.
+     */
+    public int getWrapInt(int i) {
+        if (i <= 0) {
+            return 1;
+        } else {
+            return i;
+        }
+    }
+
 }

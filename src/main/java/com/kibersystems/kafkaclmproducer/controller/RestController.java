@@ -1,5 +1,6 @@
 package com.kibersystems.kafkaclmproducer.controller;
 
+import com.kibersystems.kafkaclmproducer.KafkaClmProducerApplication;
 import com.kibersystems.kafkaclmproducer.model.KafkaPrepareMessage;
 import com.kibersystems.kafkaclmproducer.service.ProducerLayer;
 import com.kibersystems.kafkaclmproducer.utils.Supports;
@@ -24,6 +25,7 @@ public class RestController {
     private final Logger logger = LoggerFactory.getLogger(RestController.class);
     private final ProducerLayer producerLayer;
     private final Supports supports;
+
     @Autowired
     public RestController(ProducerLayer producerLayer, Supports supports) {
         this.producerLayer = producerLayer;
@@ -31,7 +33,7 @@ public class RestController {
     }
 
     /**
-     * Тест тправки почты
+     * Отправка сообщения, основной
      */
     @PostMapping(value = "/")
     @Operation(summary = "Отправка сообщения в топик Кафка")
@@ -42,7 +44,7 @@ public class RestController {
     }
 
     /**
-     * Тест отправки почты
+     * Количество потоков, получить
      */
     @GetMapping(value = "/pool")
     @Operation(summary = "Просмотр установленного числа потоков отправки")
@@ -62,7 +64,7 @@ public class RestController {
             @Parameter(description = "Thread pool queue size", example = "10")
             @PathVariable(value = "pool") int pool) {
         try {
-            if (producerLayer.setThreadPool(pool)){
+            if (producerLayer.setThreadPool(pool)) {
                 return new ResponseEntity<>("Установлено новое значение -количества потоков=" + producerLayer.getThreadPool(), HttpStatus.OK);
             } else {
                 return new ResponseEntity<>("Произошла ошибка при установлении нового числа потоков=" + producerLayer.getThreadPool(), HttpStatus.INTERNAL_SERVER_ERROR);
@@ -75,24 +77,109 @@ public class RestController {
         }
     }
 
-
     /**
-     * Получить флаг (случайный или нет порядок отправки)
+     * Получить имя топика
      */
-    @GetMapping(value = "/rand")
-    @Operation(summary = "Просмотр порядка выбора сообщений. Случайный или по порядку")
-    ResponseEntity<Boolean> getRandomizeFlag() {
-            return new ResponseEntity<>(producerLayer.getRandomizeFlag(), HttpStatus.OK);
+    @GetMapping(value = "/topic")
+    @Operation(summary = "Просмотр топика")
+    ResponseEntity<String> getTopicName() {
+        return new ResponseEntity<>(producerLayer.getTopicName(), HttpStatus.OK);
     }
 
     /**
      * Установить флаг (случайный или нет порядок отправки)
      */
-    @PutMapping(value = "/rand/{rand}")
-    @Operation(summary = "Просмотр порядка выбора сообщений. Случайный или по порядку")
-    ResponseEntity<Boolean> setRandomizeFlag(@Parameter(description = "true - случайный выбор, false - последовательный", example = "false")
-                                             @PathVariable boolean rand) {
-        return new ResponseEntity<>(producerLayer.setRandomaizeFlag(rand), HttpStatus.OK);
+    @PutMapping(value = "/topic/{topic}")
+    @Operation(summary = "Установка имени топика")
+    ResponseEntity<String> setTopicName(@Parameter(description = "Установите имя топика", example = "siebel.insurance.experimental.0")
+                                        @PathVariable(required = true) String topic) {
+        return new ResponseEntity<>(producerLayer.setTopicName(topic), HttpStatus.OK);
     }
+
+    /**
+     * Получить имя топика
+     */
+    @GetMapping(value = "/repeat")
+    @Operation(summary = "Просмотр количество сообщений к отправке")
+    ResponseEntity<Integer> getRepeatCount() {
+        return new ResponseEntity<>(producerLayer.getRepeatCount(), HttpStatus.OK);
+    }
+
+    /**
+     * Установить флаг (случайный или нет порядок отправки)
+     */
+    @PutMapping(value = "/repeat/{count}")
+    @Operation(summary = "Установка числа сообщений")
+    ResponseEntity<Integer> setRepratCount(@Parameter(description = "Установите число сообщений", example = "25")
+                                        @PathVariable(required = true) int count) {
+        return new ResponseEntity<>(producerLayer.setRepeatCount(count), HttpStatus.OK);
+    }
+
+    /**
+     * Получить имя топика
+     */
+    @GetMapping(value = "/message")
+    @Operation(summary = "Просмотр тела сообщения")
+    ResponseEntity<String> getMessage() {
+        return new ResponseEntity<>(producerLayer.getMessageBody(), HttpStatus.OK);
+    }
+
+    /**
+     * Установить флаг (случайный или нет порядок отправки)
+     */
+    @PostMapping(value = "/message")
+    @Operation(summary = "Ввод тела сообщения")
+    ResponseEntity<String> setMessage(@RequestBody(required = true) String messageBody) {
+        logger.info("log:{}", messageBody);
+        return new ResponseEntity<>(producerLayer.setMessageBody(messageBody), HttpStatus.OK);
+    }
+
+    /**
+     * Получить ключ
+     */
+    @GetMapping(value = "/key")
+    @Operation(summary = "Просмотр ключа")
+    ResponseEntity<String> getKey() {
+        return new ResponseEntity<>(producerLayer.getKey(), HttpStatus.OK);
+    }
+
+    /**
+     * Установка ключа
+     */
+    @PutMapping(value = "/key/{key}")
+    @Operation(summary = "Установка ключа сообщения")
+    ResponseEntity<String> setKey(@Parameter(description = "Установите ключ сообщения", example = "key1234567898")
+                                        @PathVariable(required = true) String key) {
+        return new ResponseEntity<>(producerLayer.setKey(key), HttpStatus.OK);
+    }
+
+
+    /**
+     * Запуск ранее подготовленного сообщения
+     */
+    @GetMapping(value = "/start")
+    @Operation(summary = "Запуск отправки сообщения")
+    ResponseEntity<String> sendPrepareMessage() {
+        producerLayer.sendPrepareMessage();
+        return new ResponseEntity<>("Сообщение отправлено", HttpStatus.OK);
+    }
+
+    /**
+     * Просмотр ранее подготовленного сообщения
+     */
+    @GetMapping(value = "/prepared")
+    @Operation(summary = "Просмотр подготовленного сообщения")
+    ResponseEntity<KafkaPrepareMessage> getPrepareMessage() {
+        return new ResponseEntity<>(producerLayer.getPrepared(), HttpStatus.OK);
+    }
+
+    /**
+     * Перезапуск приложения через API
+     */
+    @GetMapping("/restart")
+    public void restart() {
+        KafkaClmProducerApplication.restart();
+    }
+
 
 }
