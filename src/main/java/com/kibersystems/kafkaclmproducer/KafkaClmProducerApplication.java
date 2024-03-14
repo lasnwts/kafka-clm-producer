@@ -60,7 +60,5 @@ public class KafkaClmProducerApplication implements CommandLineRunner {
 		logger.info("| Application Name       :{}", appName);
 		logger.info("| Current version        :{}", appVersion);
 		logger.info("=------------------------------------------------------------------------------------------------------------=");
-
-
 	}
 }
