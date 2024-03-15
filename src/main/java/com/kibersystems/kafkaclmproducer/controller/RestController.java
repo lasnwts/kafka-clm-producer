@@ -35,7 +35,7 @@ public class RestController {
     /**
      * Отправка сообщения, основной
      */
-    @PostMapping(value = "/")
+    @PostMapping(value = "/messages")
     @Operation(summary = "Отправка сообщения в топик Кафка")
     public ResponseEntity<String> sendToTopic(KafkaPrepareMessage prepareMessage) {
         logger.info("log:{}", prepareMessage);
@@ -180,5 +180,7 @@ public class RestController {
     public void restart() {
         KafkaClmProducerApplication.restart();
     }
+
+
 
 }

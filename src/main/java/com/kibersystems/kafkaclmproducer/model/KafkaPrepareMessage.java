@@ -16,12 +16,15 @@ public class KafkaPrepareMessage {
     private String key; //Значение ключа в сообщении
     @Schema(example = "-body-", description = "Тело сообщения")
     private String message; //Строка с сообщением
+    @Schema(example = "10", description = "Количество потоков сообщений")
+    private int countThreads; //Количество сообщений
 
-    public KafkaPrepareMessage(int countMessage, String topicName, String key, String message) {
+    public KafkaPrepareMessage(int countMessage, String topicName, String key, String message, int countThreads) {
         this.countMessage = countMessage;
         this.topicName = topicName;
         this.key = key;
         this.message = message;
+        this.countThreads = countThreads;
     }
 
     public int getCountMessage() {
@@ -40,13 +43,38 @@ public class KafkaPrepareMessage {
         return message;
     }
 
+    public void setCountMessage(int countMessage) {
+        this.countMessage = countMessage;
+    }
+
+    public void setTopicName(String topicName) {
+        this.topicName = topicName;
+    }
+
+    public void setKey(String key) {
+        this.key = key;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
+    public int getCountThreads() {
+        return countThreads;
+    }
+
+    public void setCountThreads(int countThreads) {
+        this.countThreads = countThreads;
+    }
+
     @Override
     public String toString() {
-        return "KafkaMessage{" +
+        return "KafkaPrepareMessage{" +
                 "countMessage=" + countMessage +
                 ", topicName='" + topicName + '\'' +
                 ", key='" + key + '\'' +
                 ", message='" + message + '\'' +
+                ", countThreads=" + countThreads +
                 '}';
     }
 }

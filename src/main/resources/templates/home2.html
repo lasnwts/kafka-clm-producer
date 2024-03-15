@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="utf-8">
+    <title>Spring boot Kafka test service</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <link rel="stylesheet"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css"/>
+    <script
+            src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script
+            src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
+    <script
+            src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
+    <script src="/postrequest.js"></script>
+    <script src="/getrequest.js"></script>
+</head>
+<body>
+<h4><span style="color: #8b9b55;"><span style="color: #8b9b55;">Service: kafka-clm-producer</span></span></h4>
+<div th:replace="header :: content"></div>
+<div class="alert alert-dark" id="postResultDiv" align="center"></div>
+<div class="container">
+    <h2>Kafka property</h2>
+    <form th:method="POST" th:action="@{/message}" th:object="${kafkaPreppareMessage}">
+
+        <label for="name">Topic name (Имя топика)</label> <input type="text"
+                                                                 class="form-control" id="name"
+                                                                 th:field="*{topicName}"
+                                                                 placeholder="Enter topic name" name="name">
+
+
+        <label for="name">Key (ключ сообщения):</label> <input type="text"
+                                                               class="form-control" id="key"
+                                                               th:field="*{key}"
+                                                               placeholder="Enter key message"
+                                                               name="key">
+
+        <label for="name">message (Тело сообщения):</label> <input type="text"
+                                                                   class="form-control" id="message"
+                                                                   th:field="*{message}"
+                                                                   placeholder="Enter message"
+                                                                   name="message">
+
+
+        <label for="name">Count Message Size (количество cообщений):</label> <input type="text"
+                                                                                    class="form-control" id="poll"
+                                                                                    th:field="*{countMessage}"
+                                                                                    placeholder="Enter countMessage size"
+                                                                                    name="countMessage">
+
+        <label for="name">Count Threads Size (количество потоков):</label> <input type="text"
+                                                                                  class="form-control" id="countThreads"
+                                                                                  th:field="*{countThreads}"
+                                                                                  placeholder="Enter countThreads count"
+                                                                                  name="countThreads">
+
+        <br>
+        <button type="submit" class="btn btn-primary">Send message</button>
+    </form>
+    <br/>
+</div>
+<div style="text-align: center;" th:replace="footer :: content"></div>
+</body>
+</html>

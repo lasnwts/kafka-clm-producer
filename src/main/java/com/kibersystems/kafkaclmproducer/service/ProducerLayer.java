@@ -141,7 +141,8 @@ public class ProducerLayer {
      * Отправка сообщения
      */
     public void sendPrepareMessage() {
-        sendSimpleMessage(new KafkaPrepareMessage(supports.getWrapInt(configure.getRepeatCont()), configure.getTopicName(), configure.getKey(), supports.getWrapNull(configure.getMessageBody())));
+        sendSimpleMessage(new KafkaPrepareMessage(supports.getWrapInt(configure.getRepeatCont()), configure.getTopicName(),
+                configure.getKey(), supports.getWrapNull(configure.getMessageBody()),configure.getThreads()));
     }
 
     /**
@@ -149,7 +150,8 @@ public class ProducerLayer {
      * @return - Готовое сообщение, здесь вся информация кроме, числа потоков
      */
     public KafkaPrepareMessage getPrepared(){
-        return new KafkaPrepareMessage(supports.getWrapInt(configure.getRepeatCont()), configure.getTopicName(), configure.getKey(), supports.getWrapNull(configure.getMessageBody()));
+        return new KafkaPrepareMessage(supports.getWrapInt(configure.getRepeatCont()), configure.getTopicName(),
+                configure.getKey(), supports.getWrapNull(configure.getMessageBody()), configure.getThreads());
     }
 
 
