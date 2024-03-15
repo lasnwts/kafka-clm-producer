@@ -21,7 +21,7 @@
 <div class="alert alert-dark" id="postResultDiv" align="center"></div>
 <div class="container">
     <h2>Kafka property</h2>
-    <form th:method="POST" th:action="@{/message}" th:object="${kafkaPreppareMessage}">
+    <form th:method="POST" th:action="@{/}" th:object="${kafkaPreppareMessage}">
 
         <label for="name">Topic name (Имя топика)</label> <input type="text"
                                                                  class="form-control" id="name"
