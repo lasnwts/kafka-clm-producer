@@ -53,4 +53,9 @@ public class Controller {
         producerLayer.sendSimpleMessage(kafkaPrepareMessage);
         return "index";
     }
+
+    @GetMapping("/home")
+    public String home() {
+        return "home";
+    }
 }

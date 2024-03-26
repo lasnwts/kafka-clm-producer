@@ -78,6 +78,7 @@ public class Executors {
             logger.info("Запуск потока id={}", Thread.currentThread().getId());
             if (kafkaProducerService.sendMessage(kafkaMessage.getTopicName(), kafkaMessage.getKey(), kafkaMessage.getMessage())) {
                 logger.info("Номер потока={},  сообщение отправлено:{}", Thread.currentThread().getId(), kafkaMessage);
+                configure.setSendCount(configure.getSendCount() + 1);
             } else {
                 logger.error("Error: Ошибка: Номер потока={}, сообщение НЕ отправлено:{}", Thread.currentThread().getId(), kafkaMessage);
             }

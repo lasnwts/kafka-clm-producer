@@ -1,5 +1,6 @@
 package com.kibersystems.kafkaclmproducer.configure;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
@@ -7,6 +8,9 @@ import org.springframework.stereotype.Component;
 @Component
 @ConfigurationProperties
 public class Configure {
+
+    @Schema(example = "0", description = "Количество уже отправленных сообщений")
+    private int sendCount; //Количество отправленных сообщений
 
     /**
      * service.pool.size=5
@@ -118,6 +122,14 @@ public class Configure {
 
     public void setTopicName(String topicName) {
         this.topicName = topicName;
+    }
+
+    public synchronized int getSendCount() {
+        return sendCount;
+    }
+
+    public synchronized void setSendCount(int sendCount) {
+        this.sendCount = sendCount;
     }
 }
 

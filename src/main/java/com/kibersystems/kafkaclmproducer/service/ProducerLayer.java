@@ -26,12 +26,23 @@ public class ProducerLayer {
      * @param prepareMessage - объект сообщения
      */
     public void sendSimpleMessage(KafkaPrepareMessage prepareMessage) {
+        configure.setSendCount(0); //Обнуляем счетчик
         if (prepareMessage != null && prepareMessage.getCountMessage() > 0 && prepareMessage.getTopicName() != null && !prepareMessage.getTopicName().isEmpty()) {
             for (int i = 0; i < prepareMessage.getCountMessage(); i++) {
                 executors.getTask(prepareMessage);
             }
         }
     }
+
+    /**
+     * Количество уже отправленных сообщений
+     * @return - число сообщений
+     */
+    public int getMessageSendCount(){
+        return configure.getSendCount();
+    }
+
+
 
     /**
      * Получение количества установленных потоков

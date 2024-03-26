@@ -17,8 +17,7 @@ public class KafkaPrepareMessage {
     @Schema(example = "-body-", description = "Тело сообщения")
     private String message; //Строка с сообщением
     @Schema(example = "10", description = "Количество потоков сообщений")
-    private int countThreads; //Количество сообщений
-
+    private int countThreads; //Количество потоков
     public KafkaPrepareMessage(int countMessage, String topicName, String key, String message, int countThreads) {
         this.countMessage = countMessage;
         this.topicName = topicName;
@@ -66,7 +65,6 @@ public class KafkaPrepareMessage {
     public void setCountThreads(int countThreads) {
         this.countThreads = countThreads;
     }
-
     @Override
     public String toString() {
         return "KafkaPrepareMessage{" +

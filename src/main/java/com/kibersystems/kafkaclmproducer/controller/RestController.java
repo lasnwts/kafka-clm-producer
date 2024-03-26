@@ -1,6 +1,8 @@
 package com.kibersystems.kafkaclmproducer.controller;
 
 import com.kibersystems.kafkaclmproducer.KafkaClmProducerApplication;
+import com.kibersystems.kafkaclmproducer.dto.ServiceResponse;
+import com.kibersystems.kafkaclmproducer.model.EventKafka;
 import com.kibersystems.kafkaclmproducer.model.KafkaPrepareMessage;
 import com.kibersystems.kafkaclmproducer.service.ProducerLayer;
 import com.kibersystems.kafkaclmproducer.utils.Supports;
@@ -14,13 +16,15 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 
 /**
  * Класс для тестирования канала отправки почтовых сооющений
  */
 @org.springframework.web.bind.annotation.RestController
 @RequestMapping("/api/v1")
-@Tag(name = "Контроллер для проверки почтовой подсистемы", description = "Проверка отправки почты")
+@Tag(name = "Контроллер для подготовки и отправки сообщений на Кафка", description = "Отправка сообщений")
 public class RestController {
     private final Logger logger = LoggerFactory.getLogger(RestController.class);
     private final ProducerLayer producerLayer;
@@ -181,6 +185,16 @@ public class RestController {
         KafkaClmProducerApplication.restart();
     }
 
+    /**
+     * Методы для работы с формой html
+     */
 
+    /**
+     * GET
+     * @return
+     */
+//    public ResponseEntity<Object>  getFormPrepare(){
+//        ServiceResponse<EventKafka> response = new ServiceResponse<>("success", EventKafka);
+//    }
 
 }
